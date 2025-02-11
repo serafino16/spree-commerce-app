@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: spree-backend-rollout
+spec:
+  replicas: 3
+  strategy:
+    canary:
+      steps:
+        - setWeight: 10  
+        - pause: {60s}  
+        - setWeight: 50  
+        - pause: {60s}
+        - setWeight: 100 
+  template:
+    metadata:
+      labels:
+        app: spree-backend
+    spec:
+      containers:
+        - name: spree-backend
+          image: spree/spree-api:v2 
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://spree_user:spree_password@spree-db/spree_development"
+
