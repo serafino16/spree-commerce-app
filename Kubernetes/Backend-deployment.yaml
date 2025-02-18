@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spree-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spree-backend
+  template:
+    metadata:
+      labels:
+        app: spree-backend
+    spec:
+      containers:
+        - name: spree-backend
+          image:  
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: "postgres://spree_user:spree_password@spree-db/spree_development"
+
+

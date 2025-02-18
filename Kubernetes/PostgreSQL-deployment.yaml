@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spree-db
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spree-db
+  template:
+    metadata:
+      labels:
+        app: spree-db
+    spec:
+      containers:
+        - name: postgres
+          image: 
+          env:
+            - name: POSTGRES_USER
+              value: "spree_user"
+            - name: POSTGRES_PASSWORD
+              value: "spree_password"
+            - name: POSTGRES_DB
+              value: "spree_development"
+          ports:
+            - containerPort: 5432
+
+
