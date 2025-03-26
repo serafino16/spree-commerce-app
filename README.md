@@ -22,6 +22,8 @@ EKS_IRSA:Config for iam for service account with oidc token and necessary polici
 
 EKS-IRSA files:generic-variables.tf,iam-oidc-connect-provider-variables.tf,iam-oidc-connect-provider.tf,irsa-iam-policy-and-role.tf,local-values.tf,provider.tf
 
+Ingress controller: two ingress controllers,one internet-facing for alb for forntend and spree api with ssl redirect,health checks and conncected to route 53 public hosted zone and one internal with nlb for backend serives and database also with health checks.
+
 IAM-ADMIN: Config for Administrator of the eks cluster
 
 EBS:ebs volume for RDS with dynamic provisioning with storageclass and csi-addon to enable the storage interface and volume claim for the ebs.
