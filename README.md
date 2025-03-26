@@ -30,7 +30,7 @@ EBS:ebs volume for RDS with dynamic provisioning with storageclass and csi-addon
 
 EBS files:ebs-configmap.tf,ebs-csi-addon.tf,ebs-pvc.tf,output.tf,storageclass.tf,versions.tf
 
-EFS: file system for centralised storage for backend services with efs-csi for the interafce,storageclass and pvc for dynamic provisioning and necessary iam policies.
+EFS: file system for centralised storage for backend services with efs-csi ,storageclass and pvc for dynamic provisioning and necessary iam policies.
 
 EFS files:efs-csi-datasources.tf,efs-csi-iam-policy-and-role.tf,efs-csi-install.tf,efs-resource.tf,outputs.tf,provider.tf,pvc.tf,storage-class.tf
 
