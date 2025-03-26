@@ -14,7 +14,7 @@ EKS: for the cluster i use eks with the following resources- cluster main file f
 
 EKS files:Cluster-Autoscaler.tf,autoscaler-iam-policy-and-role.tf,ecr.tf,eks-cluster.tf,eks-outputs.tf,eks-variables.tf,eks.auto.tfvars,iam-for-NodeGroup.tf,iam-for-cluster.tf,node-group-private.tf,node-group-public.tf.
 
-VPC:components for the network include public,private and database subnets,nat gateway,dns hostname,route table,availability zones,and vpc name.
+VPC:components for the network include public,private and database subnets,nat gateway,internet gateway,dns hostname,route table,availability zones,and vpc name.
 
 VPC files:generic-variables.tf,lacal-values.tf,terraform.tfvars,versions.tf,vpc-auto.tfvars,vpc-module.tf,vpc-outputs.tf,vpc-variables.tf
 
