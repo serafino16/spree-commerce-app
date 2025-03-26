@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'us-east-1'
+        ECR_REPO_NAME = 'spree-api'
+        EKS_CLUSTER_NAME = 'eks-spree'
+        EKS_NAMESPACE = 'spree'
+        IMAGE_TAG = "${GIT_COMMIT}"
+        ECR_URL = "123456789012.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    sh "docker build -t ${ECR_URL}/${ECR_REPO_NAME}:${IMAGE_TAG} ."
+                }
+            }
+        }
+
+        stage('Docker Push to ECR') {
+            steps {
+                script {
+                    sh """
+                        aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URL}
+                        docker push ${ECR_URL}/${ECR_REPO_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to EKS') {
+            steps {
+                script {
+                    sh """
+                        aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}
+                        kubectl set image deployment/spree-api spree-api=${ECR_URL}/${ECR_REPO_NAME}:${IMAGE_TAG} --namespace=${EKS_NAMESPACE}
+                        kubectl rollout status deployment/spree-api --namespace=${EKS_NAMESPACE}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
